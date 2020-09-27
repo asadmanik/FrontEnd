@@ -1,0 +1,46 @@
+<h1>Post List With Comments Details</h1>
+<table>
+  <thead>
+    <tr>
+      <th>PostTitle</th>
+      <th>Post Added By</th>
+      <th>Date</th>
+      <th>Comments Count</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let item of posts; let index = i">
+    <tr>
+      <td>{{ item.PostTitle }}</td>
+      <td style="text-align: center">{{ item.PostAddedBy }}</td>
+      <td style="text-align: center">
+        {{ item.PostAddedDate | date: "dd/MM/yyyy" }}
+      </td>
+      <td style="text-align: center">{{ item.Comments.length }} Comments</td>
+    </tr>
+    <tr *ngFor="let cmnt of item.Comments">
+      <td style="padding-left: 20px">{{ cmnt.CommentTitle }}</td>
+      <td style="text-align: center">{{ cmnt.CommentAddedBy }}</td>
+      <td style="text-align: center">
+        {{ cmnt.CommentAddedDate | date: "dd/MM/yyyy" }}
+      </td>
+      <td style="text-align: center">
+        <button (click)="likeComment(cmnt.CommentId, cmnt.PostId)">
+          {{ cmnt.LikeCount }} Likes
+        </button>
+        <button (click)="dislikeComment(cmnt.CommentId, cmnt.PostId)">
+          {{ cmnt.DislikeCount }} DisLikes
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls> -->
+<div class="paging__area">
+  <button type="button" (click)="prevClicked()">Prev</button>
+  <ul class="paging">
+    <li *ngFor="let pn of counter(maxPage); let index = index">
+      {{ index + 1 }}
+    </li>
+  </ul>
+  <button type="button" (click)="nextClicked()">Next</button>
+</div>
